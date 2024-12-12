@@ -1,0 +1,103 @@
+{% import '_includes/forms.twig' as forms %}
+
+    {{ forms.lightSwitchField({
+        first: true,
+        label: 'Enabled for entries'|t('family-tree'),
+        name: 'entries',
+        on: settings.entries,
+        instructions: 'Whether the the family tree should be shown in entries in a structure.'|t('family-tree')
+    }) }}
+
+    {{ forms.lightSwitchField({
+        label: 'Enabled for categories'|t('family-tree'),
+        name: 'categories',
+        on: settings.categories,
+        instructions: 'Whether the the family tree should be shown in categories in a structure.'|t('family-tree')
+    }) }}
+
+    <hr>
+
+    {{ forms.selectField({
+        label: "Sort order"|t('family-tree'),
+        instructions: "Should siblings or children be displayed first?"|t('family-tree'),
+        name: "sortOrder",
+        options:{
+            childrenFirst: "Children first"|t('family-tree'),
+            siblingsFirst: "Siblings first"|t('family-tree')
+        },
+        value: settings.sortOrder
+    }) }}
+
+    <hr>
+
+    <h2>Excludes</h2>
+
+    {% set sections = craft.app.getEntries().getAllSections() %}
+    {% set options = {} %}
+    {% for section in sections %}
+        {% if section.type == "structure" %}
+            {% set options = options|merge({(section.handle) : section.name}) %}
+        {% endif %}
+    {% endfor %}
+
+    {{ forms.checkboxSelectField({
+        label: 'Exclude sections'|t('family-tree'),
+        instructions: 'Select sections where the family tree should never be displayed.'|t('family-tree'),
+        name: 'excludeSections',
+        values: settings.excludeSections,
+        options: options
+    }) }}
+
+    {% set categoruyGroups = craft.app.getCategories().getAllGroups() %}
+    {% set options = {} %}
+    {% for group in categoruyGroups %}
+        {% set options = options|merge({(group.handle) : group.name}) %}
+    {% endfor %}
+
+    {{ forms.checkboxSelectField({
+        label: 'Exclude category groups'|t('family-tree'),
+        instructions: 'Select category groups where the family tree should never be displayed.'|t('family-tree'),
+        name: "excludeCategoryGroups",
+        values: settings.excludeCategoryGroups,
+        options: options
+    }) }}
+
+    {% set elements = [] %}
+
+    {% for id in settings.excludeEntries %}
+        {% set element = craft.app.elements.getElementById(id) %}
+        {% if element %}
+            {% set elements = elements|merge([element]) %}
+        {% endif %}
+    {% endfor %}
+
+    {{ forms.elementSelectField({
+        label: "Exclude entries"|t('family-tree'),
+        instructions: "Exclude specific entries."|t('family-tree'),
+        name: "excludeEntries",
+        elementType: "craft\\elements\\Entry",
+        single:false,
+        jsClass: 'Craft.AssetSelectInput',
+        elements: elements
+    }) }}
+
+    {% set elements = [] %}
+
+    {% for id in settings.excludeCategories %}
+        {% set element = craft.app.elements.getElementById(id) %}
+        {% if element %}
+            {% set elements = elements|merge([element]) %}
+        {% endif %}
+    {% endfor %}
+
+    {{ forms.elementSelectField({
+        label: "Exclude categories"|t('family-tree'),
+        instructions: "Exclude specific categories."|t('family-tree'),
+        name: "excludeCategories",
+        elementType: "craft\\elements\\Category",
+        single:false,
+        jsClass: 'Craft.AssetSelectInput',
+        elements: elements
+    }) }}
+
+

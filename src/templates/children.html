@@ -1,0 +1,30 @@
+{% set children = element.getChildren().status(null).all() %}
+
+{% if children|length %}
+    <fieldset class="field element-children">
+
+        <div class="heading">
+            <legend id="children-label" aria-hidden="true">{{ 'Children'|t('family-tree') }}</legend>
+        </div>
+
+        <div class="input ltr">
+            <ul class="elements chips chips-small">
+                {% for child in children %}
+                    <li>
+                        <div id="chip-{{ child.id }}" class="chip small element">
+                            <div class="chip-content">
+                                <span class="status {{ child.status }}" role="img" aria-label="Status: Live"></span>
+                                <craft-element-label id="chip-{{ child.id }}-label" class="label">
+                                    <a class="label-link" href="{{ child.cpEditUrl }}">
+                                        <span>{{ child.title }}</span>
+                                    </a>
+                                </craft-element-label>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </fieldset>
+{% endif %}

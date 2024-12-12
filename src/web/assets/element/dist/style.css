@@ -1,0 +1,19 @@
+.element-children{
+    align-items: start !important;
+}
+
+.element-children ul{
+    gap: 0.2rem !important;
+}
+
+.element-children .input.ltr{
+    padding-block:12px !important;
+}
+
+.element-children .chips.chips-small li{
+    height: fit-content !important;
+}
+
+.element-children .chip.small{
+    min-height:initial !important;
+}
