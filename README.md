@@ -1,4 +1,4 @@
-# Child Viewer
+# Family tree
 
 Give links to child entries in an entry's edit page
 
@@ -6,25 +6,24 @@ Give links to child entries in an entry's edit page
 
 This plugin requires Craft CMS 5.5.0 or later, and PHP 8.2 or later.
 
-## Installation
+## Seamless Navigation for Your Content Structure*
 
-You can install this plugin from the Plugin Store or with Composer.
+Effortlessly explore and manage your content structure in Craft CMS! With Family Tree, you can instantly view and click through sibling and child entries or categories from any detail page in your structure. Perfect for large content trees and dynamic category systems.
 
-#### From the Plugin Store
+## Key Features:
 
-Go to the Plugin Store in your project’s Control Panel and search for “Child Viewer”. Then press “Install”.
+- Quickly access siblings and child entries/categories after saving your current entry.
+- Enhances workflow for content managers and developers alike.
 
-#### With Composer
+## Settings
 
-Open your terminal and run the following commands:
+Family Tree comes with flexible settings to fit your exact needs:
+- Enabled for entries: Show the family tree for entries in a structure.
+- Enabled for categories: Show the family tree for categories in a structure.
+- Sort order: Decide whether siblings or children are displayed first.
+- Exclude sections: Specify sections where the family tree should never be displayed.
+- Exclude category groups: Select category groups to hide the family tree.
+- Exclude entries: Exclude specific entries from the family tree view.
+- Exclude categories: Exclude specific categories from the family tree view.
 
-```bash
-# go to the project directory
-cd /path/to/my-project.test
-
-# tell Composer to load the plugin
-composer require pixeldeluxe/family-tree
-
-# tell Craft to install the plugin
-./craft plugin/install family-tree
-```
+Streamline your Craft CMS content workflow today with Family Tree!
