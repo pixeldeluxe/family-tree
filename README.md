@@ -1,6 +1,6 @@
 # Family tree
 
-Give links to child entries in an entry's edit page
+Show sibling and child element links in an element overview.
 
 ## Requirements
 
