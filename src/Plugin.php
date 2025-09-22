@@ -65,27 +65,29 @@ class Plugin extends BasePlugin
         if($this->getSettings()->entries){
             Event::on(
                 Entry::class,
-                Element::EVENT_DEFINE_META_FIELDS_HTML,
+                Entry::EVENT_DEFINE_META_FIELDS_HTML,
                 function ($event) {
                     $entry = $event->sender;
 
-                    if($entry->section->type !== "structure"){
-                        return null;
-                    }
+                    if ($entry instanceof Entry && $entry->section !== null) {
+                        if ($entry->section->type !== "structure") {
+                            return null;
+                        }
 
-                    $settings = $this->getSettings();
-                    if(in_array($entry->section->handle,$settings->excludeSections) || in_array($entry->id, $settings->excludeEntries)){
-                        return null;
-                    }
+                        $settings = $this->getSettings();
+                        if (in_array($entry->section->handle, $settings->excludeSections) || in_array($entry->id, $settings->excludeEntries)) {
+                            return null;
+                        }
 
-                    Craft::$app->getView()->registerAssetBundle(ElementAsset::class);
+                        Craft::$app->getView()->registerAssetBundle(ElementAsset::class);
 
-                    if($settings->sortOrder == "childrenFirst") {
-                        $event->html .= Craft::$app->view->renderTemplate('family-tree/children', ['element' => $entry]);
-                        $event->html .= Craft::$app->view->renderTemplate('family-tree/siblings', ['element' => $entry]);
-                    }else{
-                        $event->html .= Craft::$app->view->renderTemplate('family-tree/siblings', ['element' => $entry]);
-                        $event->html .= Craft::$app->view->renderTemplate('family-tree/children', ['element' => $entry]);
+                        if ($settings->sortOrder == "childrenFirst") {
+                            $event->html .= Craft::$app->view->renderTemplate('family-tree/children', ['element' => $entry]);
+                            $event->html .= Craft::$app->view->renderTemplate('family-tree/siblings', ['element' => $entry]);
+                        } else {
+                            $event->html .= Craft::$app->view->renderTemplate('family-tree/siblings', ['element' => $entry]);
+                            $event->html .= Craft::$app->view->renderTemplate('family-tree/children', ['element' => $entry]);
+                        }
                     }
                 }
             );
@@ -94,7 +96,7 @@ class Plugin extends BasePlugin
         if($this->getSettings()->categories) {
             Event::on(
                 Category::class,
-                Element::EVENT_DEFINE_META_FIELDS_HTML,
+                Category::EVENT_DEFINE_META_FIELDS_HTML,
                 function ($event) {
                     $category = $event->sender;
 
