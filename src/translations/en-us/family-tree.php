@@ -4,6 +4,9 @@ return [
     "Children" => "Children",
     "Siblings" => "Siblings",
 
+    "Add child" => "Add child",
+    "Add sibling" => "Add sibling",
+
     "Enabled for entries" => "Enabled for entries",
     "Whether the the family tree should be shown in entries in a structure." => "Whether the the family tree should be shown in entries in a structure.",
 

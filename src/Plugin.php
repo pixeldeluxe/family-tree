@@ -81,13 +81,40 @@ class Plugin extends BasePlugin
 
                         Craft::$app->getView()->registerAssetBundle(ElementAsset::class);
 
-                        if ($settings->sortOrder == "childrenFirst") {
-                            $event->html .= Craft::$app->view->renderTemplate('family-tree/children', ['element' => $entry]);
-                            $event->html .= Craft::$app->view->renderTemplate('family-tree/siblings', ['element' => $entry]);
-                        } else {
-                            $event->html .= Craft::$app->view->renderTemplate('family-tree/siblings', ['element' => $entry]);
-                            $event->html .= Craft::$app->view->renderTemplate('family-tree/children', ['element' => $entry]);
+                        $sectionHandle = "";
+                        $entryTypeId = "";
+
+                        if($entry->getSection()){
+                            $sectionHandle = $entry->getSection()->handle;
+                            if(count($entry->getSection()->getEntryTypes())){
+                                $entryTypeId = $entry->getSection()->getEntryTypes()[0]->id;
+                            }
                         }
+
+                        $variables =  [
+                            'element' => $entry,
+                            'cpTrigger' => Craft::$app->config->general->cpTrigger,
+                            'elementType' => "entries",
+                            'sectionHandle' => $sectionHandle,
+                            'entryTypeId' => $entryTypeId,
+                        ];
+
+                        $menus = [
+                            "siblings",
+                            "children",
+                        ];
+
+                        if ($settings->sortOrder == "childrenFirst") {
+                            $menus = [
+                                "children",
+                                "siblings",
+                            ];
+                        }
+
+                        foreach ($menus as $menu){
+                            $event->html .= Craft::$app->view->renderTemplate('family-tree/' . $menu, $variables);
+                        }
+
                     }
                 }
             );
@@ -106,12 +133,28 @@ class Plugin extends BasePlugin
                     }
 
                     Craft::$app->getView()->registerAssetBundle(ElementAsset::class);
-                    if($settings->sortOrder == "childrenFirst") {
-                        $event->html .= Craft::$app->view->renderTemplate('family-tree/children', ['element' => $category]);
-                        $event->html .= Craft::$app->view->renderTemplate('family-tree/siblings', ['element' => $category]);
-                    }else{
-                        $event->html .= Craft::$app->view->renderTemplate('family-tree/siblings', ['element' => $category]);
-                        $event->html .= Craft::$app->view->renderTemplate('family-tree/children', ['element' => $category]);
+
+                    $variables =  [
+                        'element' => $category,
+                        'cpTrigger' => Craft::$app->config->general->cpTrigger,
+                        'elementType' => "categories",
+                        'sectionHandle' => $category->group->handle,
+                    ];
+
+                    $menus = [
+                        "siblings",
+                        "children",
+                    ];
+
+                    if ($settings->sortOrder == "childrenFirst") {
+                        $menus = [
+                            "children",
+                            "siblings",
+                        ];
+                    }
+
+                    foreach ($menus as $menu){
+                        $event->html .= Craft::$app->view->renderTemplate('family-tree/' . $menu, $variables);
                     }
                 }
             );

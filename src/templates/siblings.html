@@ -2,15 +2,31 @@
 {% set siblings = element.getSiblings().status(null).all() %}
 
 {% if siblings|length %}
-    {{ forms.elementSelectField({
-        label: "Siblings"|t('family-tree'),
-        name: "excludeEntries",
-        elementType: "craft\\elements\\Entry",
-        single:false,
-        jsClass: 'Craft.AssetSelectInput',
-        elements: siblings,
-        allowAdd: false,
-        allowRemove: false,
-        sortable: false
-    }) }}
+    <div class="field family-tree">
+        <div class="heading">
+            <label>{{ "Siblings"|t('family-tree') }}</label>
+        </div>
+        <div class="input ltr flex">
+            {{ forms.elementSelect({
+                elementType: "craft\\elements\\Entry",
+                single:false,
+                jsClass: 'Craft.AssetSelectInput',
+                elements: siblings,
+                allowAdd: false,
+                allowRemove: false,
+                sortable: false
+            }) }}
+
+            {% set parentId = null %}
+            {% if element.getParent() %}
+                {% set parentId = element.getParent().id %}
+            {% endif %}
+
+            <a href="{{ currentSite.baseUrl ~ "/" ~ cpTrigger ~ "/" ~ elementType ~ "/" ~ sectionHandle ~ "/new?site=" ~ currentSite.handle ~ "&parentId=" ~ parentId }}{{ entryTypeId is defined ? "&typeId=" ~ entryTypeId }}">
+                <button type="button" class="btn add icon dashed wrap" aria-label="Choose" aria-describedby="parentId-label" tabindex="0">
+                    {{ "Add sibling"|t('family-tree') }}
+                </button>
+            </a>
+        </div>
+    </div>
 {% endif %}

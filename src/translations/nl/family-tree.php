@@ -2,7 +2,10 @@
 
 return [
     "Children" => "Kinderen",
-    "Siblings" => "Broers en zussen",
+    "Siblings" => "Naasten",
+
+    "Add child" => "Voeg kind toe",
+    "Add sibling" => "Voeg naaste toe",
 
     "Enabled for entries" => "Ingeschakeld voor inhoud",
     "Whether the the family tree should be shown in entries in a structure." => "Of de family tree in inhoud in een structuur moet worden weergegeven.",
@@ -13,7 +16,7 @@ return [
     "Sort order" => "Sorteer volgorde",
 
     "Children first" => "Kinderen eerst",
-    "Siblings first" => "Broers en zussen eerst",
+    "Siblings first" => "Naasten eerst",
 
     "Exclude sections" => "Secties uitsluiten",
     "Select sections where the family tree should never be displayed." => "Selecteer secties waar de family tree nooit weergegeven zal worden.",
