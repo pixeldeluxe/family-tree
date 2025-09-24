@@ -1,30 +1,16 @@
+{% import '_includes/forms.twig' as forms %}
 {% set siblings = element.getSiblings().status(null).all() %}
 
 {% if siblings|length %}
-    <fieldset class="field element-children">
-
-        <div class="heading">
-            <legend id="children-label" aria-hidden="true">{{ 'Siblings'|t('family-tree') }}</legend>
-        </div>
-
-        <div class="input ltr">
-            <ul class="elements chips chips-small">
-                {% for sibling in siblings %}
-                    <li>
-                        <div id="chip-{{ sibling.id }}" class="chip small element">
-                            <div class="chip-content">
-                                <span class="status {{ sibling.status }}" role="img" aria-label="Status: Live"></span>
-                                <craft-element-label id="chip-{{ sibling.id }}-label" class="label">
-                                    <a class="label-link" href="{{ sibling.cpEditUrl }}">
-                                        <span>{{ sibling.title }}</span>
-                                    </a>
-                                </craft-element-label>
-                            </div>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-
-    </fieldset>
+    {{ forms.elementSelectField({
+        label: "Children"|t('family-tree'),
+        name: "excludeEntries",
+        elementType: "craft\\elements\\Entry",
+        single:false,
+        jsClass: 'Craft.AssetSelectInput',
+        elements: siblings,
+        allowAdd: false,
+        allowRemove: false,
+        sortable: false
+    }) }}
 {% endif %}
