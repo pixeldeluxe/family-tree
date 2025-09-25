@@ -1,5 +1,8 @@
 # Release Notes for Family tree
 
+## 1.1.1 - 2025-09-25
+- Fixed a bug where the ability to add children or siblings was only possible when an entry already has children or siblings respectively 
+
 ## 1.1.0 - 2025-09-24
 - Altered meta chips to use Craft native elementSelect, keeping styling inline and allowing Craft native features
 - Added the ability to create child and sibling elements from the meta fields
